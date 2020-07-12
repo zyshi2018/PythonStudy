@@ -1,0 +1,103 @@
+<html>
+<head>
+  <title>Evernote Export</title>
+  <basefont face="YaHei Consolas Hybrid" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/601935 (zh-CN, DDL); Windows/10.0.0 (Win64); EDAMVersion=V2;"/>
+  <meta name="content-class" content="yinxiang.markdown"/>
+  <style>
+    body, td {
+      font-family: YaHei Consolas Hybrid;
+      font-size: 14pt;
+    }
+  </style>
+</head>
+<body>
+<a name="501"/>
+
+<div><span><div style="font-size: 14px; margin: 0; padding: 0; width: 100%;"><h1 style="line-height: 160%; box-sizing: content-box; font-weight: 700; font-size: 41px; border-bottom: 3px double #999; color: #000; margin-top: 14px;">matplotlib绘图</h1>
+<h4 style="line-height: 160%; box-sizing: content-box; font-size: 20px; color: #333;">个人理解：matplotlib最先产生一个figure（画布）对象，以后所有的操作都是在figure上面进行的。有了figure之后就可以输出axes（坐标轴），可以有一个或者多个，数据就在axes上面绘制。然后可以设置axes的label，title等属性。</h4>
+<ol style="line-height: 160%; box-sizing: content-box; display: block; padding-left: 30px; margin: 6px 0 10px; color: #333; list-style-type: decimal;">
+<li style="line-height: 160%; box-sizing: content-box;">导入基本库</li>
+</ol>
+<pre style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; margin: 2px 0 8px; background-color: #f5f7f8;"><code style="display: block; overflow-x: auto; background: #1e1e1e; line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; letter-spacing: -.3px; padding: 18px; color: #f4f4f4; white-space: pre-wrap;">import matplotlib.pyplot as plt
+import numpy as np
+</code></pre>
+<p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;">简单的例子</p>
+<pre style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; margin: 2px 0 8px; background-color: #f5f7f8;"><code style="display: block; overflow-x: auto; background: #1e1e1e; line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; letter-spacing: -.3px; padding: 18px; color: #f4f4f4; white-space: pre-wrap;">fig, ax = plt.subplots() # 创建一个包含一个axes的figure
+ax.plot([1, 2, 3, 4], [1, 4, 2, 3]) # 在axes上面绘图
+</code></pre>
+<p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;">实际上如果只需要一个axes，可以直接用下面方式作图<br/>
+<code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">plt.plot([1, 2, 3, 4], [1, 4, 2, 3])</code>. 与上面效果一样。</p>
+<pre style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; margin: 2px 0 8px; background-color: #f5f7f8;"><code style="display: block; overflow-x: auto; background: #1e1e1e; line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; letter-spacing: -.3px; padding: 18px; color: #f4f4f4; white-space: pre-wrap;">fig = plt.figure() # an empty figure with no Axes
+fig, ax = plt.subplots() # a figure with a single Axes
+fig, axs = plt.subplots(2, 2) # 创建2*2是axes的figure，以后做图就在axs上面操作，其中axs是一个元组，axes[0,0]则是在第一个位置绘图
+</code></pre>
+<p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;">注意一个<strong style="line-height: 160%; box-sizing: content-box; font-weight: 700;">figure</strong>可以包含多个<strong style="line-height: 160%; box-sizing: content-box; font-weight: 700;">axes</strong>，比如上面代码就包含4个axes。一个<strong style="line-height: 160%; box-sizing: content-box; font-weight: 700;">axes</strong>包含2到3个<strong style="line-height: 160%; box-sizing: content-box; font-weight: 700;">axis</strong>（2D和3D图像）， <strong style="line-height: 160%; box-sizing: content-box; font-weight: 700;">axes</strong>下面有方法<code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">set_xlim([])</code>控制坐标轴范围，<code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">set_title</code>， <code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">set_xlabel</code>等来显示坐标轴标签与图名称。</p>
+<pre style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; margin: 2px 0 8px; background-color: #f5f7f8;"><code style="display: block; overflow-x: auto; background: #1e1e1e; line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; letter-spacing: -.3px; padding: 18px; color: #f4f4f4; white-space: pre-wrap;">x = np.linspace(0, 2, 100)
+fig, ax = plt.subplots() 
+ax.plot(x, x, label='linear') # Plot some data on the axes.
+ax.plot(x, x**2, label='quadratic') # Plot more data on the axes...
+ax.set_xlabel('x label') 
+ax.set_ylabel('y label') # 添加xy标签
+ax.set_title(&quot;Simple Plot&quot;) # 添加标题
+ax.legend(loc='best') # 添加图例
+</code></pre>
+<h4 style="line-height: 160%; box-sizing: content-box; font-size: 20px; color: #333;">matplotlib.pyplot is a collection of command style functions that make matplotlib work like MATLAB. 例如</h4>
+<pre style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; margin: 2px 0 8px; background-color: #f5f7f8;"><code style="display: block; overflow-x: auto; background: #1e1e1e; line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; letter-spacing: -.3px; padding: 18px; color: #f4f4f4; white-space: pre-wrap;">plt.plot([1, 2, 3, 4], [1, 4, 9, 16], 'ro')
+plt.axis([0, 6, 0, 20])
+plt.show()
+</code></pre>
+<ul style="line-height: 160%; box-sizing: content-box; display: block; list-style-type: disc; padding-left: 30px; margin: 6px 0 10px; color: #333;">
+<li style="line-height: 160%; box-sizing: content-box; position: relative;">对于每一对<code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">x-y</code>,都有第三个可选参数来控制线的形状与颜色，类似 <code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">matlab</code>风格。</li>
+</ul>
+<pre style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; margin: 2px 0 8px; background-color: #f5f7f8;"><code style="display: block; overflow-x: auto; background: #1e1e1e; line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; letter-spacing: -.3px; padding: 18px; color: #f4f4f4; white-space: pre-wrap;">t = np.arange(0., 5., 0.2)
+plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')
+plt.show()
+</code></pre>
+<ul style="line-height: 160%; box-sizing: content-box; display: block; list-style-type: disc; padding-left: 30px; margin: 6px 0 10px; color: #333;">
+<li style="line-height: 160%; box-sizing: content-box; position: relative;">可以用字典键值对形式绘图</li>
+</ul>
+<pre style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; margin: 2px 0 8px; background-color: #f5f7f8;"><code style="display: block; overflow-x: auto; background: #1e1e1e; line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; letter-spacing: -.3px; padding: 18px; color: #f4f4f4; white-space: pre-wrap;">data = {'a': np.arange(50),
+'c': np.random.randint(0, 50, 50),
+'d': np.random.randn(50)}
+data['b'] = data['a'] +
+data['d'] = np.abs(data['d']) * 100
+plt.scatter('a', 'b', c='c', s='d', data=data)#注意scatter函数用法
+plt.xlabel('entry a')
+plt.ylabel('entry b')
+plt.show()
+</code></pre>
+<ul style="line-height: 160%; box-sizing: content-box; display: block; list-style-type: disc; padding-left: 30px; margin: 6px 0 10px; color: #333;">
+<li style="line-height: 160%; box-sizing: content-box; position: relative;">横坐标可以是字符串变量</li>
+</ul>
+<pre style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; margin: 2px 0 8px; background-color: #f5f7f8;"><code style="display: block; overflow-x: auto; background: #1e1e1e; line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; letter-spacing: -.3px; padding: 18px; color: #f4f4f4; white-space: pre-wrap;">values = [1, 10, 100]
+plt.figure(figsize=(9, 3))
+plt.bar(names, values)
+plt.show()
+</code></pre>
+<h4 style="line-height: 160%; box-sizing: content-box; font-size: 20px; color: #333;">Line对象的设置(linestyle,linewidth,...)</h4>
+<ul style="line-height: 160%; box-sizing: content-box; display: block; list-style-type: disc; padding-left: 30px; margin: 6px 0 10px; color: #333;">
+<li style="line-height: 160%; box-sizing: content-box; position: relative;">利用关键字参数： <code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">plt.plot(x, y, linewidth=2.0)</code></li>
+<li style="line-height: 160%; box-sizing: content-box; position: relative;">利用 <code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">setp()</code></li>
+</ul>
+<pre style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; margin: 2px 0 8px; background-color: #f5f7f8;"><code style="display: block; overflow-x: auto; background: #1e1e1e; line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; letter-spacing: -.3px; padding: 18px; color: #f4f4f4; white-space: pre-wrap;">x = np.array([1,2,3,4,5])
+y = x**2
+y2 = x**3
+line1,line2 = plt.plot(x,y,x,y2)
+plt.setp(line1,'color','r')
+plt.setp(line2,'color','g','linewidth',2.0)
+plt.show()
+</code></pre>
+<h4 style="line-height: 160%; box-sizing: content-box; font-size: 20px; color: #333;">plt绘图风格（<code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">plt.style.available</code>）</h4>
+<ul style="line-height: 160%; box-sizing: content-box; display: block; list-style-type: disc; padding-left: 30px; margin: 6px 0 10px; color: #333;">
+<li style="line-height: 160%; box-sizing: content-box; position: relative;"><code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">plt.style.use('fivethirtyeight')</code></li>
+</ul>
+<h4 style="line-height: 160%; box-sizing: content-box; font-size: 20px; color: #333;"><code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">imshow()</code>函数</h4>
+<ul style="line-height: 160%; box-sizing: content-box; display: block; list-style-type: disc; padding-left: 30px; margin: 6px 0 10px; color: #333;">
+<li style="line-height: 160%; box-sizing: content-box; position: relative;"><code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">plt.imshow(lum_img, cmap=&quot;hot&quot;,clim=(0,0.5))</code></li>
+<li style="line-height: 160%; box-sizing: content-box; position: relative;">或者 <code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">imgplot = plt.imshow(lum_img)</code><br/>
+<code style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; color: #c1788b; padding: 4px 4px 2px 0; letter-spacing: -.3px;">imgplot.set_cmap('nipy_spectral')</code></li>
+</ul>
+</div><center style="display:none !important;visibility:collapse !important;height:0 !important;white-space:nowrap;width:100%;overflow:hidden">%23%20matplotlib%E7%BB%98%E5%9B%BE%0A%23%23%23%23%20%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3%EF%BC%9Amatplotlib%E6%9C%80%E5%85%88%E4%BA%A7%E7%94%9F%E4%B8%80%E4%B8%AAfigure%EF%BC%88%E7%94%BB%E5%B8%83%EF%BC%89%E5%AF%B9%E8%B1%A1%EF%BC%8C%E4%BB%A5%E5%90%8E%E6%89%80%E6%9C%89%E7%9A%84%E6%93%8D%E4%BD%9C%E9%83%BD%E6%98%AF%E5%9C%A8figure%E4%B8%8A%E9%9D%A2%E8%BF%9B%E8%A1%8C%E7%9A%84%E3%80%82%E6%9C%89%E4%BA%86figure%E4%B9%8B%E5%90%8E%E5%B0%B1%E5%8F%AF%E4%BB%A5%E8%BE%93%E5%87%BAaxes%EF%BC%88%E5%9D%90%E6%A0%87%E8%BD%B4%EF%BC%89%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%9C%89%E4%B8%80%E4%B8%AA%E6%88%96%E8%80%85%E5%A4%9A%E4%B8%AA%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%B0%B1%E5%9C%A8axes%E4%B8%8A%E9%9D%A2%E7%BB%98%E5%88%B6%E3%80%82%E7%84%B6%E5%90%8E%E5%8F%AF%E4%BB%A5%E8%AE%BE%E7%BD%AEaxes%E7%9A%84label%EF%BC%8Ctitle%E7%AD%89%E5%B1%9E%E6%80%A7%E3%80%82%0A%0A1.%20%E5%AF%BC%E5%85%A5%E5%9F%BA%E6%9C%AC%E5%BA%93%0A%60%60%60%0Aimport%20matplotlib.pyplot%20as%20plt%0Aimport%20numpy%20as%20np%0A%60%60%60%0A%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90%0A%60%60%60%0Afig%2C%20ax%20%3D%20plt.subplots()%20%23%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%8C%85%E5%90%AB%E4%B8%80%E4%B8%AAaxes%E7%9A%84figure%0Aax.plot(%5B1%2C%202%2C%203%2C%204%5D%2C%20%5B1%2C%204%2C%202%2C%203%5D)%20%23%20%E5%9C%A8axes%E4%B8%8A%E9%9D%A2%E7%BB%98%E5%9B%BE%0A%60%60%60%0A%E5%AE%9E%E9%99%85%E4%B8%8A%E5%A6%82%E6%9E%9C%E5%8F%AA%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%AAaxes%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E7%94%A8%E4%B8%8B%E9%9D%A2%E6%96%B9%E5%BC%8F%E4%BD%9C%E5%9B%BE%0A%60plt.plot(%5B1%2C%202%2C%203%2C%204%5D%2C%20%5B1%2C%204%2C%202%2C%203%5D)%60.%20%E4%B8%8E%E4%B8%8A%E9%9D%A2%E6%95%88%E6%9E%9C%E4%B8%80%E6%A0%B7%E3%80%82%0A%0A%60%60%60%0Afig%20%3D%20plt.figure()%20%23%20an%20empty%20figure%20with%20no%20Axes%0Afig%2C%20ax%20%3D%20plt.subplots()%20%23%20a%20figure%20with%20a%20single%20Axes%0Afig%2C%20axs%20%3D%20plt.subplots(2%2C%202)%20%23%20%E5%88%9B%E5%BB%BA2*2%E6%98%AFaxes%E7%9A%84figure%EF%BC%8C%E4%BB%A5%E5%90%8E%E5%81%9A%E5%9B%BE%E5%B0%B1%E5%9C%A8axs%E4%B8%8A%E9%9D%A2%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%85%B6%E4%B8%ADaxs%E6%98%AF%E4%B8%80%E4%B8%AA%E5%85%83%E7%BB%84%EF%BC%8Caxes%5B0%2C0%5D%E5%88%99%E6%98%AF%E5%9C%A8%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE%E7%BB%98%E5%9B%BE%0A%60%60%60%0A%E6%B3%A8%E6%84%8F%E4%B8%80%E4%B8%AA**figure**%E5%8F%AF%E4%BB%A5%E5%8C%85%E5%90%AB%E5%A4%9A%E4%B8%AA**axes**%EF%BC%8C%E6%AF%94%E5%A6%82%E4%B8%8A%E9%9D%A2%E4%BB%A3%E7%A0%81%E5%B0%B1%E5%8C%85%E5%90%AB4%E4%B8%AAaxes%E3%80%82%E4%B8%80%E4%B8%AA**axes**%E5%8C%85%E5%90%AB2%E5%88%B03%E4%B8%AA**axis**%EF%BC%882D%E5%92%8C3D%E5%9B%BE%E5%83%8F%EF%BC%89%EF%BC%8C%20**axes**%E4%B8%8B%E9%9D%A2%E6%9C%89%E6%96%B9%E6%B3%95%60set_xlim(%5B%5D)%60%E6%8E%A7%E5%88%B6%E5%9D%90%E6%A0%87%E8%BD%B4%E8%8C%83%E5%9B%B4%EF%BC%8C%60set_title%60%EF%BC%8C%20%60set_xlabel%60%E7%AD%89%E6%9D%A5%E6%98%BE%E7%A4%BA%E5%9D%90%E6%A0%87%E8%BD%B4%E6%A0%87%E7%AD%BE%E4%B8%8E%E5%9B%BE%E5%90%8D%E7%A7%B0%E3%80%82%0A%60%60%60%0Ax%20%3D%20np.linspace(0%2C%202%2C%20100)%0Afig%2C%20ax%20%3D%20plt.subplots()%20%0Aax.plot(x%2C%20x%2C%20label%3D'linear')%20%23%20Plot%20some%20data%20on%20the%20axes.%0Aax.plot(x%2C%20x**2%2C%20label%3D'quadratic')%20%23%20Plot%20more%20data%20on%20the%20axes...%0Aax.set_xlabel('x%20label')%20%0Aax.set_ylabel('y%20label')%20%23%20%E6%B7%BB%E5%8A%A0xy%E6%A0%87%E7%AD%BE%0Aax.set_title(%22Simple%20Plot%22)%20%23%20%E6%B7%BB%E5%8A%A0%E6%A0%87%E9%A2%98%0Aax.legend(loc%3D'best')%20%23%20%E6%B7%BB%E5%8A%A0%E5%9B%BE%E4%BE%8B%0A%60%60%60%0A%0A%23%23%23%23%20matplotlib.pyplot%20is%20a%20collection%20of%20command%20style%20functions%20that%20make%20matplotlib%20work%20like%20MATLAB.%20%E4%BE%8B%E5%A6%82%0A%60%60%60%0Aplt.plot(%5B1%2C%202%2C%203%2C%204%5D%2C%20%5B1%2C%204%2C%209%2C%2016%5D%2C%20'ro')%0Aplt.axis(%5B0%2C%206%2C%200%2C%2020%5D)%0Aplt.show()%0A%60%60%60%0A-%20%E5%AF%B9%E4%BA%8E%E6%AF%8F%E4%B8%80%E5%AF%B9%60x-y%60%2C%E9%83%BD%E6%9C%89%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0%E6%9D%A5%E6%8E%A7%E5%88%B6%E7%BA%BF%E7%9A%84%E5%BD%A2%E7%8A%B6%E4%B8%8E%E9%A2%9C%E8%89%B2%EF%BC%8C%E7%B1%BB%E4%BC%BC%20%60matlab%60%E9%A3%8E%E6%A0%BC%E3%80%82%0A%60%60%60%0At%20%3D%20np.arange(0.%2C%205.%2C%200.2)%0Aplt.plot(t%2C%20t%2C%20'r--'%2C%20t%2C%20t**2%2C%20'bs'%2C%20t%2C%20t**3%2C%20'g%5E')%0Aplt.show()%0A%60%60%60%0A-%20%E5%8F%AF%E4%BB%A5%E7%94%A8%E5%AD%97%E5%85%B8%E9%94%AE%E5%80%BC%E5%AF%B9%E5%BD%A2%E5%BC%8F%E7%BB%98%E5%9B%BE%0A%60%60%60%0Adata%20%3D%20%7B'a'%3A%20np.arange(50)%2C%0A'c'%3A%20np.random.randint(0%2C%2050%2C%2050)%2C%0A'd'%3A%20np.random.randn(50)%7D%0Adata%5B'b'%5D%20%3D%20data%5B'a'%5D%20%2B%0Adata%5B'd'%5D%20%3D%20np.abs(data%5B'd'%5D)%20*%20100%0Aplt.scatter('a'%2C%20'b'%2C%20c%3D'c'%2C%20s%3D'd'%2C%20data%3Ddata)%23%E6%B3%A8%E6%84%8Fscatter%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95%0Aplt.xlabel('entry%20a')%0Aplt.ylabel('entry%20b')%0Aplt.show()%0A%60%60%60%0A-%20%E6%A8%AA%E5%9D%90%E6%A0%87%E5%8F%AF%E4%BB%A5%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%98%E9%87%8F%0A%60%60%60%0Avalues%20%3D%20%5B1%2C%2010%2C%20100%5D%0Aplt.figure(figsize%3D(9%2C%203))%0Aplt.bar(names%2C%20values)%0Aplt.show()%0A%60%60%60%0A%23%23%23%23%20Line%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%BE%E7%BD%AE(linestyle%2Clinewidth%2C...)%0A-%20%E5%88%A9%E7%94%A8%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0%EF%BC%9A%20%60plt.plot(x%2C%20y%2C%20linewidth%3D2.0)%60%0A-%20%20%E5%88%A9%E7%94%A8%20%60setp()%60%20%20%0A%60%60%60%0Ax%20%3D%20np.array(%5B1%2C2%2C3%2C4%2C5%5D)%0Ay%20%3D%20x**2%0Ay2%20%3D%20x**3%0Aline1%2Cline2%20%3D%20plt.plot(x%2Cy%2Cx%2Cy2)%0Aplt.setp(line1%2C'color'%2C'r')%0Aplt.setp(line2%2C'color'%2C'g'%2C'linewidth'%2C2.0)%0Aplt.show()%0A%60%60%60%0A%0A%23%23%23%23%20%20plt%E7%BB%98%E5%9B%BE%E9%A3%8E%E6%A0%BC%EF%BC%88%60plt.style.available%60%EF%BC%89%0A-%20%60plt.style.use('fivethirtyeight')%60%0A%0A%0A%0A%23%23%23%23%20%60imshow()%60%E5%87%BD%E6%95%B0%0A-%20%60plt.imshow(lum_img%2C%20cmap%3D%22hot%22%2Cclim%3D(0%2C0.5))%60%0A-%20%E6%88%96%E8%80%85%20%60imgplot%20%3D%20plt.imshow(lum_img)%60%0A%60%20%20imgplot.set_cmap('nipy_spectral')%60%0A%0A%0A%0A</center></span>
+</div></body></html> 
